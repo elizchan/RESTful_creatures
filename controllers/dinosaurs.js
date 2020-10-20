@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router()
 const fs = require('fs')
 
-//cannot get after entering filter
-router.get('/index', (req, res)=>{
+router.get('/', (req, res)=>{
     //take the text from dinosaurs.json and store it in a variable
     let dinosaurs = fs.readFileSync('./dinosaurs.json')
     let dinoData = JSON.parse(dinosaurs) //convert array into string
@@ -31,8 +30,7 @@ router.get('/:idx', (req, res)=>{
     res.render('dinosaurs/show.ejs', {dino: dinoData[dinoIndex], dinoId: dinoIndex})
 })
 
-//cannot get post after entering new dino
-router.post('/index', (req, res)=>{
+router.post('/', (req, res)=>{
     let dinosaurs = fs.readFileSync('./dinosaurs.json')
     let dinoData = JSON.parse(dinosaurs)
     dinoData.push(req.body) //push new dino into array
@@ -40,7 +38,7 @@ router.post('/index', (req, res)=>{
     // JSON.stringify does the opposite of JSON.parse
     fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinoData))
     //redirect to the GET /dinosaurs route(index)
-    res.redirect('dinosaurs/index.ejs')
+    res.redirect('/dinosaurs')
 })
 
 module.exports = router
